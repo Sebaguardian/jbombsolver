@@ -1,0 +1,64 @@
+use cy "colorify"
+use "std/fmt"
+use "std/os"
+use ss "std/strings"
+
+static redStyle = cy::Style{
+	Foreground: cy::Foreground.Red,
+	Background: cy::Background.Black,
+}
+
+static red = cy::Colorify("R", redStyle)
+
+static green = cy::Colorify("G", cy::Style{
+	Foreground: cy::Foreground.Green,
+	Background: cy::Background.Black,
+})
+
+static blue = cy::Colorify("B", cy::Style{
+	Foreground: cy::Foreground.Blue,
+	Background: cy::Background.Black,
+})
+
+static yellow = cy::Colorify("Y", cy::Style{
+	Foreground: cy::Foreground.Yellow,
+	Background: cy::Background.Black,
+})
+static invalidInput = cy::Colorify("Invalid input! >:(", redStyle)
+
+fn main() {
+	print("Does SN have a vowel? [y/n] ")
+	decision := ss::ToLower(os::Stdin().ReadLine()!)
+
+	if decision != "y" && decision != "n" {
+		println(invalidInput)
+		os::Exit(1)
+	}
+
+	print("How many strikes do you have? [0-2] ")
+	strikes := ss::ToLower(os::Stdin().ReadLine()!)
+
+	if decision == "y" {
+		if strikes == "0" {
+			fmt::Printf("{} -> {} | {} -> {} | {} -> {} | {} -> {}\n", red, blue, blue, red, green, yellow, yellow, green)
+		} else if strikes == "1" {
+			fmt::Printf("{} -> {} | {} -> {} | {} -> {} | {} -> {}\n", red, yellow, blue, green, green, blue, yellow, red)
+		} else if strikes == "2" {
+			fmt::Printf("{} -> {} | {} -> {} | {} -> {} | {} -> {}\n", red, green, blue, red, green, yellow, yellow, blue)
+		} else {
+			println(invalidInput)
+			os::Exit(1)
+		}
+	} else if decision == "n" {
+		if strikes == "0" {
+			fmt::Printf("{} -> {} | {} -> {} | {} -> {} | {} -> {}", red, blue, blue, yellow, green, green, yellow, red)
+		} else if strikes == "1" {
+			fmt::Printf("R -> R | B -> B | G -> Y | Y -> G", red, red, blue, blue, green, yellow, yellow, green)
+		} else if strikes == "2" {
+			fmt::Printf("{} -> {} | {} -> {} | {} -> {} | {} -> {}", red, yellow, blue, green, green, blue, yellow, red)
+		} else {
+			println(invalidInput)
+			os::Exit(1)
+		}
+	}
+}
