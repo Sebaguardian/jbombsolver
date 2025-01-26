@@ -1,0 +1,51 @@
+use "std/conv"
+use "std/fmt"
+use "std/os"
+
+const invalidInput = "Invalid input! >:("
+
+fn main() {
+	mut position := make([]int, 5)
+	mut stage := 0
+
+	print("\033[0mMEMORY\n\n")
+
+	for stage < 5; stage++ {
+		print("\033[1A")
+		print("\033[K")
+		print("\033[1A")
+
+		print("Stage: ")
+		println(stage + 1)
+
+		print("Enter the displayed number: \033[0m")
+		pos := conv::Atoi(os::Stdin().ReadLine()!)!
+		if pos < 1 || pos > 4 {
+			print("\033[31m")
+			stage--
+			continue
+		}
+
+		// Stage 1
+		match pos {
+		| 1:
+			position[stage] = 2
+		| 2:
+			position[stage] = 2
+		| 3:
+			position[stage] = 3
+		| 4:
+			position[stage] = 4
+		}
+
+		print("\033[1A")
+
+		fmt::Printf("Press {} position & enter the label: ", position[stage])
+		label := conv::Atoi(os::Stdin().ReadLine()!)!
+		if label < 1 || label > 4 {
+			print("\033[31m")
+			stage--
+			continue
+		}
+	}
+}

@@ -1,0 +1,205 @@
+use cy "colorify"
+use "std/fmt"
+use "std/os"
+
+static redStyle = cy::Style{
+	Foreground: cy::Foreground.Red,
+	Background: cy::Background.Black,
+}
+
+static invalidInput = cy::Colorify("Invalid input! >:(", redStyle)
+
+fn Main() {
+	let (mut position, mut number) = make([]int, 5), make([]int, 5) // zamienić do u8 jak sie zrobi to na dole vvv
+	let (mut disnum, mut label, mut pos) = 0, 0, 0                  // int | A jak robić wiele naraz u8??
+	let mut stage: u8 = 0
+
+	for stage < 5; stage++ {
+		fmt::Printf("stage: \n", stage)
+		println("Enter the displayed number")
+		disnum = int(os::Readline()) // TODO naprawic. Czytaj „nwm jak zrobić int input”
+
+		match stage {
+		| 1:
+			match disnum {
+			| 1:
+				println("Press 2nd position & enter the label of it")
+				position[0] = 2
+				label = os::Stdin().Readline()!
+				if label < 1 || label > 4 {
+					println(invalidInput)
+					stage = 0
+				}
+				number[0] = label
+			| 2:
+				println("Press 2nd position & enter the label of it")
+				position[0] = 2
+				label = os::Stdin().Readline()!
+				if label < 1 || label > 4 {
+					println(invalidInput)
+					stage = 0
+				}
+				number[0] = label
+			| 3:
+				println("Press 3rd position & enter the label of it")
+				position[0] = 3
+				label = os::Stdin().Readline()!
+				if label < 1 || label > 4 {
+					println(invalidInput)
+					stage = 0
+				}
+				number[0] = label
+			| 4:
+				println("Press 4th position & enter label of it")
+				position[0] = 4
+				label = os::Stdin().Readline()!
+				if label < 1 || label > 4 {
+					println(invalidInput)
+					stage = 0
+				}
+				number[0] = label
+			|:
+				println(invalidInput)
+				stage = 0
+			}
+		| 2:
+			match disnum {
+			| 1:
+				fmt::Printf("Press \"4\" & enter the position of it")
+				number[0] = 4
+				pos = os::Stdin().Readline()!
+				if position < 1 || position > 4 {
+					println(invalidInput)
+					stage = 1
+				}
+				position[1] = pos
+			| 2:
+				fmt::Printf("Press position {} & enter the label of it\n", position[0])
+				position[1] = position[0]
+				label = os::Stdin().Readline()!
+				if label < 1 || label > 4 {
+					println(invalidInput)
+					stage = 1
+				}
+				number[1] = label
+			| 3:
+				println("Press 1st position & enter the label of it")
+				position[1] = 1
+				label = os::Stdin().Readline()!
+				if label < 1 || label > 4 {
+					println(invalidInput)
+					stage = 1
+				}
+				number[1] = label
+			| 4:
+				fmt::Printf("Press position {} & enter label of it\n", position[0])
+				position[1] = position[0]
+				label = os::Stdin().Readline()!
+				if label < 1 || label > 4 {
+					println(invalidInput)
+					stage = 1
+				}
+				number[1] = label
+			|:
+				println(invalidInput)
+				stage = 1
+			}
+		| 3:
+			match disnum {
+			| 1:
+				fmt::Printf("Press button labeled \"{}\" & enter the position of it\n", number[1])
+				number[2] = number[1]
+				pos = os::Stdin().Readline()!
+				if pos < 1 || pos > 4 {
+					println(invalidInput)
+					stage = 2
+				}
+				position[2] = pos
+			| 2:
+				fmt::Printf("Press button labeled \"{}\" & enter the position of it\n", number[0])
+				number[2] = number[0]
+				pos = os::Stdin().Readline()!
+				if pos < 1 || pos > 4 {
+					println(invalidInput)
+					stage = 2
+				}
+				position[2] = pos
+			| 3:
+				println("Press 3rd position & enter the label of it")
+				position[2] = 3
+				label = os::Stdin().Readline()!
+				if label < 1 || label > 4 {
+					println(invalidInput)
+					stage = 2
+				}
+				number[2] = label
+			| 4:
+				println("Press button labeled \"4\"& enter the position of it")
+				number[2] = 4
+				pos = os::Stdin().Readline()!
+				if pos < 1 || pos > 4 {
+					println(invalidInput)
+					stage = 2
+				}
+				position[2] = pos
+			|:
+				println(invalidInput)
+				stage = 2
+			}
+		| 4:
+			match disnum {
+			| 1:
+				fmt::Printf("Press position {} & enter the label of it\n", position[0])
+				position[3] = position[0]
+				label = os::Stdin().Readline()!
+				if label < 1 || label > 4 {
+					println(invalidInput)
+					stage = 3
+				}
+				number[3] = label
+			| 2:
+				println("Press 1st position & enter the label of it")
+				position[3] = 1
+				label = os::Stdin().Readline()!
+				if label < 1 || label > 4 {
+					println(invalidInput)
+					stage = 3
+				}
+				number[3] = label
+			| 3:
+				fmt::Printf("Press position {} & enter the label of it\n", position[1])
+				position[3] = position[1]
+				label = os::Stdin().Readline()!
+				if label < 1 || label > 4 {
+					println(invalidInput)
+					stage = 3
+				}
+				number[3] = label
+			| 4:
+				fmt::Printf("Press position {} & enter label of it", position[1])
+				position[3] = position[1]
+				label = os::Stdin().Readline()!
+				if label < 1 || label > 4 {
+					println(invalidInput)
+					stage = 3
+				}
+				number[3] = label
+			|:
+				println(invalidInput)
+				stage = 3
+			}
+		| 5:
+		| 1:
+			fmt::Printf("Press button labeled \"{}\"", number[0])
+		| 2:
+			fmt::Printf("Press button labeled \"{}\"", number[1])
+		| 3:
+			fmt::Printf("Press button labeled \"{}\"", number[3])
+		| 4:
+			fmt::Printf("Press button labeled \"{}\"", number[2])
+		|:
+			println(invalidInput)
+			stage = 4
+		}
+	}
+}
