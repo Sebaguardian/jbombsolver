@@ -1,21 +1,26 @@
-use "cliq/cliq"
+// use "memory"
+use "cliq"
 use "simonsays"
-use "std/maps"
-use "std/slices"
+use "std/os"
 
-static argMap: map[int][2]str = {
-	1: ["ss", "Simon Says"],
-}
+static cliqBuilder: cliq::Builder = cliq::Builder{
+	Args: {
+		"simon": false,
+		"memory": false,
+	},
+}.Help()
 
 fn main() {
-	mut cliq := cliq::Init(argMap)
-	cliq.Parse(false)
+	mut cliq := cliqBuilder.Build()
+	cliq.GetCLI()
+	cliq.Parse()
 
-	if !slices::Contains(maps::Values(cliq.Res), true) {
-		println("No arguments provided. Try `jbombsolver help`.")
-	}
-
-	if cliq.Res["ss"] {
+	if cliq.Get("simon") == true {
 		simonsays::Main()
+		// } else if cliq.Get("memory") {
+		// 	memory::Main()
+	} else {
+		println("No valid arguments provided. Try `jbombsolver --help`.")
+		os::Exit(1)
 	}
 }

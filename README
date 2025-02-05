@@ -1,0 +1,10 @@
+USAGE
+    jbombsolver [OPTIONS]
+
+OPTIONS
+    --simon
+        Run the Simon Says module solver
+    --memory
+        Run the Memory module solver (WIP)
+    --help
+        Display CLI information
